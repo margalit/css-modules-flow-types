@@ -53,6 +53,28 @@ $ yarn install -D css-modules-flow-types-loader
 }
 ```
 
+## Options
+By default, `css-modules-flow-types-loader` will build the `.flow` file directly alongside the source css file. To specify an alternative location use the `path` property defined under `options` in the loader. For example, to have `css-modules-flow-types-loader` build files under `flow-typed`:
+
+```javascript
+{
+  test: /\.css$/,
+  use: [
+    'style-loader',
+    // Define the loader using object syntax
+    {
+      loader: 'css-modules-flow-types-loader',
+      options: {
+        path: path.join(__dirname, 'flow-typed'),
+      },
+    // Other loaders like css-loader after this:
+    {
+      ...
+    }
+  ]
+}
+```
+
 
 ## Inspiration
 - https://github.com/Quramy/typed-css-modules
