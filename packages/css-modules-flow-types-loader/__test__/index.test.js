@@ -98,4 +98,19 @@ declare module.exports: {|
 `
     );
   });
+
+  describe('when a path option specified', () => {
+    it('prepends the file with the specified path', () => {
+      loader.call({ resourcePath: 'test.css', query: { path: 'flow-typed' } }, STYLE_LOADER_OUTPUT_WITH_JS);
+
+      expect(fs.writeFile.mock.calls.length).toBe(1);
+      expect(fs.writeFile.mock.calls[0][0]).toBe('flow-typed/test.css.flow');
+      expect(fs.writeFile.mock.calls[0][1]).toBe(`${HEADER}
+declare module.exports: {|
+  +'foo': string;
+  +'foo2': string;
+|};
+`);
+    });
+  });
 });
