@@ -1,7 +1,8 @@
-'use strict';
+"use strict";
 
-import fs from 'fs';
-import printFlowDefinition from 'css-modules-flow-types-printer';
+import fs from "fs";
+import { getOptions } from "loader-utils";
+import printFlowDefinition from "css-modules-flow-types-printer";
 
 function getTokens(content) {
   const tokens = [];
@@ -21,10 +22,14 @@ function getTokens(content) {
 
 module.exports = function cssModulesFlowTypesLoader(content) {
   const tokens = getTokens(content);
+  const options = getOptions(this);
 
   // NOTE: We cannot use .emitFile as people might use this with devServer
   // (e.g. in memory storage).
-  const outputPath = this.resourcePath + '.flow';
+
+  const outputPath = options && options.path
+    ? options.path + "/" + this.resourcePath + ".flow"
+    : this.resourcePath + ".flow";
   fs.writeFile(outputPath, printFlowDefinition(tokens), {}, function() {});
 
   return content;
