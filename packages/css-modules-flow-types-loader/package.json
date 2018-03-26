@@ -27,6 +27,7 @@
     "webpack loader"
   ],
   "dependencies": {
-    "css-modules-flow-types-printer": "^1.0.0"
+    "css-modules-flow-types-printer": "^1.0.0",
+    "loader-utils": "^1.1.0"
   }
 }
